@@ -37,7 +37,7 @@ function App() {
 
   return (
     <div className="container">
-      <h1>Cursor Mover</h1>
+      <h1>Cursor Walker</h1>
 
       <div className="status">
         Status:
