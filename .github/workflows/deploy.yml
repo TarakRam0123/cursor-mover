@@ -1,0 +1,63 @@
+name: Deploy Cursor Mover to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "client/**"
+      - ".github/workflows/deploy.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: client/package-lock.json
+
+      - name: Install frontend dependencies
+        working-directory: client
+        run: npm ci
+
+      - name: Build React application
+        working-directory: client
+        run: npm run build
+        env:
+          CI: "false"
+          REACT_APP_API_URL: https://YOUR-BACKEND-URL.onrender.com
+
+      - name: Upload build
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: client/build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

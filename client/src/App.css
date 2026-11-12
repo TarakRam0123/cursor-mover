@@ -1,0 +1,49 @@
+body {
+  margin: 0;
+  background: #f4f4f4;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  text-align: center;
+  margin-top: 100px;
+}
+
+.status {
+  margin: 20px;
+  font-size: 22px;
+}
+
+.active {
+  color: green;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.inactive {
+  color: red;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+.activate-btn {
+  background: green;
+}
+
+.deactivate-btn {
+  background: red;
+}
